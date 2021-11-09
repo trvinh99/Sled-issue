@@ -1,0 +1,46 @@
+use bastion::Bastion;
+use smol::Timer;
+use std::fs::File;
+use std::io::Read;
+use std::time::Duration;
+use std::time::SystemTime;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    insert();
+    //spawn!(query(1636432243220342000, 1636432293220342000));
+
+    Bastion::block_until_stopped();
+}
+
+fn insert() {
+    let mut file = File::open("src/logo.png").unwrap();
+    let mut contents = vec![];
+    file.read_to_end(&mut contents).unwrap();
+
+    for i in 1..=30 {
+        let contents = contents.clone();
+        let record_db_config = sled::Config::default()
+            .path(format!("src/record/{}", i))
+            //.cache_capacity(10 * 1024 * 1024)
+            .mode(sled::Mode::HighThroughput);
+        let record_db = record_db_config.open().unwrap();
+        bastion::spawn!(async move {
+            let mut i = 0;
+            while i < 200 {
+                let now = match SystemTime::now().duration_since(SystemTime::UNIX_EPOCH) {
+                    Ok(n) => n.as_nanos(),
+                    Err(_) => panic!("SystemTime before UNIX EPOCH!"),
+                };
+
+                let _ = record_db.insert(now.to_string().as_bytes(), contents.to_vec());
+
+                i += 1;
+
+                Timer::after(Duration::from_millis(200)).await;
+            }
+        });
+    }
+}
