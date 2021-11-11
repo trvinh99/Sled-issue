@@ -29,13 +29,14 @@ fn insert() {
         let record_db = record_db_config.open().unwrap();
         bastion::spawn!(async move {
             let mut i = 0;
-            while i < 200 {
+            while i < 1000 {
                 let now = match SystemTime::now().duration_since(SystemTime::UNIX_EPOCH) {
                     Ok(n) => n.as_nanos(),
                     Err(_) => panic!("SystemTime before UNIX EPOCH!"),
                 };
 
                 let _ = record_db.insert(now.to_string().as_bytes(), contents.to_vec());
+                record_db.flush();
 
                 i += 1;
 
