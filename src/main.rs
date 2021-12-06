@@ -13,7 +13,7 @@ fn main() {
 
     // insert();
     //spawn!(query(1636432243220342000, 1636432293220342000));
-    let record_folder = format!("{}", RECORD_DIR);
+    let record_folder = format!("{}/2021-11-25", RECORD_DIR);
 
     rm_rf::ensure_removed(record_folder).unwrap();
 
