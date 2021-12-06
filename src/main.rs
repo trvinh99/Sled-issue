@@ -5,7 +5,7 @@ use std::io::Read;
 use std::time::Duration;
 use std::time::SystemTime;
 
-pub const RECORD_DIR: &'static str = "/home/lexhub/database/record";
+pub const RECORD_DIR: &'static str = "/data/lexhub/record";
 
 fn main() {
     Bastion::init();
@@ -13,7 +13,7 @@ fn main() {
 
     // insert();
     //spawn!(query(1636432243220342000, 1636432293220342000));
-    let record_folder = format!("{}/url/2021-12-04", RECORD_DIR);
+    let record_folder = format!("{}/2021-12-03", RECORD_DIR);
 
     rm_rf::ensure_removed(record_folder).unwrap();
 
