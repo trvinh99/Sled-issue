@@ -14,7 +14,7 @@ fn main() {
     // insert();
     let record_folder = format!("{}/2021-12-08", RECORD_DIR);
 
-    std::fs::remove_file(record_folder).unwrap();
+    std::fs::remove_dir_all(record_folder).unwrap();
 
     Bastion::block_until_stopped();
 }
