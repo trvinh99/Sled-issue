@@ -4,6 +4,7 @@ use std::fs::File;
 use std::io::Read;
 use std::time::Duration;
 use std::time::SystemTime;
+use sysinfo::{Disk, DiskExt, System, SystemExt};
 
 pub const RECORD_DIR: &'static str = "/data/lexhub/record";
 
@@ -12,9 +13,26 @@ fn main() {
     Bastion::start();
 
     // insert();
-    let record_folder = format!("{}/2021-12-08", RECORD_DIR);
+    // let record_folder = format!("{}/2021-12-08", RECORD_DIR);
 
-    std::fs::remove_dir_all(record_folder).unwrap();
+    // std::fs::remove_dir_all(record_folder).unwrap();
+
+    let system = System::new_all();
+
+    let disk_info = system.disks();
+
+    let mut space = 0;
+    let mut avail = 0;
+
+    for disk in disk_info {
+        println!("NAME: {:?}", disk.mount_point());
+        println!("TYPE: {:?}", disk.type_());
+        space += disk.total_space();
+        avail += disk.available_space();
+    }
+
+    println!("SPACE: {}", space);
+    println!("AVAIL: {}", avail);
 
     Bastion::block_until_stopped();
 }
