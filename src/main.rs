@@ -1,7 +1,9 @@
 use bastion::Bastion;
+use ledb::Storage;
 use smol::Timer;
 use std::fs::File;
 use std::io::Read;
+use std::path::Path;
 use std::time::Duration;
 use std::time::SystemTime;
 use sysinfo::{Disk, DiskExt, System, SystemExt};
@@ -17,22 +19,11 @@ fn main() {
 
     // std::fs::remove_dir_all(record_folder).unwrap();
 
-    let system = System::new_all();
+    let frame_folder = "/home/lexhub/record/2021-12-22";
 
-    let disk_info = system.disks();
-
-    let mut space = 0;
-    let mut avail = 0;
-
-    for disk in disk_info {
-        println!("NAME: {:?}", disk.mount_point());
-        println!("TYPE: {:?}", disk.type_());
-        space += disk.total_space();
-        avail += disk.available_space();
+    if Path::new(&frame_folder).exists() {
+        std::fs::remove_dir_all(frame_folder).unwrap();
     }
-
-    println!("SPACE: {}", space);
-    println!("AVAIL: {}", avail);
 
     Bastion::block_until_stopped();
 }
