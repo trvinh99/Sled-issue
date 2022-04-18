@@ -6,15 +6,10 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-smol = "*"
-tokio="*"
-tracing-appender = "0.1.2"
-serde_json = "*"
-serde="*"
-sled="*"
-chrono="*"
-bastion="*"
-rm_rf="*"
-sysinfo = "*"
+sled = "*"
+serde_json="*"
+serde = {version = "1.0.126", features = ["derive"]}
+serde_derive = "*"
 ledb="*"
-ledb-types="*"
+ledb-types = "*"
+dashmap = "4.0.2"
