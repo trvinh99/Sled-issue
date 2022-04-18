@@ -438,7 +438,7 @@ fn get_db(
 }
 
 fn get_time_db(database_map: Arc<DashMap<String, Collection>>, cam_id: String) -> Collection {
-    let start_time_url = format!("/etc/lexhub/database/record/start_time/{}", cam_id);
+    let start_time_url = format!("/home/lexhub/database/record/start_time/{}", cam_id);
     let range_time_db = get_db(database_map, cam_id, start_time_url, None, "range_time");
 
     range_time_db
