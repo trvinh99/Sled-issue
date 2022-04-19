@@ -309,6 +309,8 @@ fn main() {
 
     println!("range time: {:?}", range_time);
 
+    drop(range_time_db);
+
     // println!("Cam list: {:?}", cam_ids);
 
     // for cam_id in cam_ids {
